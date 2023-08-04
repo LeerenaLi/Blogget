@@ -1,4 +1,5 @@
 import style from './Auth.module.css';
+import PropTypes from 'prop-types';
 
 export const Auth = ({auth}) => {
     return (
@@ -10,5 +11,10 @@ export const Auth = ({auth}) => {
                 </svg>
             }
         </button>
-    )
-}
+    );
+};
+
+Auth.propTypes = {
+    auth: PropTypes.auth,
+};
+
