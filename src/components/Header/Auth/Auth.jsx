@@ -15,6 +15,6 @@ export const Auth = ({auth}) => {
 };
 
 Auth.propTypes = {
-    auth: PropTypes.auth,
+    auth: PropTypes.bool,
 };
 
