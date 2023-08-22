@@ -3,46 +3,24 @@ import PropTypes from 'prop-types';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import { useEffect, useState } from 'react';
-import { URL_API } from '../../../api/const';
+import { useContext, useState } from 'react';
+import { tokenContext } from '../../../context/tokenContext';
+import { authContext } from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-    const [auth, setAuth] = useState({});
 
+export const Auth = () => {
+    const {delToken} = useContext(tokenContext);
     const [logout, setLogout] = useState(false);
+    const {auth, clearAuth} = useContext(authContext);
+
     const toggleBtn = () => {
         setLogout(!logout);
     };
 
     const clearToken = () => {
         delToken('');
-        setAuth({});
+        clearAuth();
     };
-
-    useEffect(() => {
-        if (!token) return;
-
-        fetch(`${URL_API}/api/v1/me`, {
-            headers: {
-                Authorization: `bearer ${token}`,
-            },
-        })
-            .then(response => {
-                if (response.status === 401) {
-                    throw new Error(`Ошибка сервера ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(({name, icon_img: iconImg}) => {
-                const img = iconImg.replace(/\?.*$/, '');
-                setAuth({name, img});
-            })
-            .catch(err => {
-                console.log(err);
-                setAuth({});
-                clearToken();
-            });
-    }, [token]);
 
     return (
         <div className={style.container}>

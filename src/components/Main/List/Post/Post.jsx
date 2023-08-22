@@ -8,11 +8,17 @@ import { Delete } from './Delete/Delete';
 import { Content } from './Content/Content';
 
 export const Post = ({postData}) => {
-    const {title, author, ups, date} = postData;
+    const {thumbnail, title, author, ups, date} = postData;
+    const checkImg = 'https://';
+
     return (
         <li className={style.post}>
             <Delete />
-            <img className={style.img} src={notphoto} alt={title} />
+            <img
+                className={style.img}
+                src={(!thumbnail.includes(checkImg)) ? notphoto : thumbnail}
+                alt={title}
+            />
 
             <Content title={title} author={author} />
 
